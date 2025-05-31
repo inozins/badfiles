@@ -1,0 +1,27 @@
+# Включение перенаправления URL
+RewriteEngine On
+
+# Если запрашиваемый файл или директория не существуют
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Маршруты для доступа к загруженным файлам (для предпросмотра)
+RewriteRule ^uploads/([a-z]{5})$ uploads/$1 [L]
+
+# Маршрут для страницы со списком файлов
+RewriteRule ^files$ files.php [L]
+
+# Маршрут для страницы с информацией
+RewriteRule ^info$ info.php [L]
+
+# Маршрут для страницы с контактами
+RewriteRule ^contact$ contact.php [L]
+
+# Обработка скачивания файлов по ID
+RewriteRule ^([a-z]{5})$ download.php?id=$1 [QSA,L]
+
+# Установка лимита загрузки файлов для PHP
+php_value upload_max_filesize 150M
+php_value post_max_size 150M
+php_value max_execution_time 300
+php_value max_input_time 300 
